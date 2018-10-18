@@ -100,7 +100,7 @@ async function onMessage (msg) {
   let room=msg.room();
   if(room){
     let topic=await room.topic();
-    if(topic!=='test'||topic!=='我爱二（5）班') {
+    if(topic!=='test' && topic!=='我爱二（5）班') {
       return
     }
     console.log(msg.toString())
@@ -108,13 +108,24 @@ async function onMessage (msg) {
     if(msg.type()===bot.Message.Type.Text && /^接龙\|.+\|.+$/i.test(msgText)){
       let msgArr = msgText.split('|');
       if(msgArr[2]==='开始'){
-        slots[msgArr[1]]=[]
-      }else if(!slots[msgArr[1]].includes(msgArr[2])){
-        slots[msgArr[1]].push(msgArr[2])
+        slots[msgArr[1]]={}
+      }else if(msgArr[2]==='删除'){
+        delete slots[msgArr[1]]
+      }else{
+        let nameArr=msgArr[2].split(':')
+        if(nameArr.length!=2) return
+        if(nameArr[1]==='删除'){
+          delete slots[msgArr[1]][nameArr[0]]
+        }else {
+          slots[msgArr[1]][nameArr[0]]=nameArr[1]
+        }
       }
+
       let replyText=msgArr[1]+":\n";
-      for(let i=0;i<slots[msgArr[1]].length;i++){
-        replyText+=((i+1)+'、'+slots[msgArr[1]][i]+'\n');
+      let i=0;
+      for(let name in slots[msgArr[1]]){
+        i++;
+        replyText+=(i+'、'+name+' '+slots[msgArr[1]][name]+'\n');
       }
       await  room.say(replyText);
     }
