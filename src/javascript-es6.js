@@ -98,8 +98,8 @@ function onError (e) {
  */
 async function onMessage (msg) {
   let room=msg.room();
-  console.log(room.id);
-  if(room && room.id==='@@a22b1066592e356fa7f5c4bd5f3c668261f4191800b120cc6a9cb8d13cf12676'){
+  let topic=await room.topic();
+  if(room && topic==='test'){
     let msgText = msg.text();
     console.log(msg.type()===bot.Message.Type.Text)
     console.log(/^接龙\|.+\|.+$/i.test(msgText))
