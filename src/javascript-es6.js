@@ -96,12 +96,8 @@ function onError (e) {
  */
 async function onMessage (msg) {
   let room=msg.room();
-  if(room){
-    console.log('room:'+room.toString());
-    console.log('room.id:'+room.id);
-    console.log('room.name:'+room.name);
-    console.log('room.topic:'+await room.topic());
-    if(msg.text()==='ping'){
+  if(room && room.id==='@@a22b1066592e356fa7f5c4bd5f3c668261f4191800b120cc6a9cb8d13cf12676'){
+    if(msg.text()==='ping' && msg.to().self()){
       await  room.say('dong')
     }
   }
