@@ -100,7 +100,7 @@ async function onMessage (msg) {
     console.log('room:'+room.toString());
     console.log('room.id:'+room.id);
     console.log('room.name:'+room.name);
-    console.log('room.topic:'+room.topic());
+    console.log('room.topic:'+await room.topic());
     if(msg.text()==='ping'){
       await  room.say('dong')
     }
