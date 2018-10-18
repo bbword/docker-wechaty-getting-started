@@ -98,13 +98,11 @@ function onError (e) {
  */
 async function onMessage (msg) {
   let room=msg.room();
-  if(room && (await room.topic())==='test'){
+  if(room){
+    let topic=await room.topic();
+    if(topic===='test'||topic==='我爱二（5）班')
     let msgText = msg.text();
-    console.log(msg.type()===bot.Message.Type.Text)
-    console.log(/^接龙\|.+\|.+$/i.test(msgText))
-
     if(msg.type()===bot.Message.Type.Text && /^接龙\|.+\|.+$/i.test(msgText)){
-      console.log(slots.toString())
       let msgArr = msgText.split('|');
       if(msgArr[2]==='开始'){
         slots[msgArr[1]]=[]
@@ -113,7 +111,7 @@ async function onMessage (msg) {
       }
       let replyText=msgArr[1]+":\n";
       for(let i=0;i<slots[msgArr[1]].length;i++){
-        replyText+=((i+1)+slots[msgArr[1]][i]+'\n');
+        replyText+=((i+1)+'、'+slots[msgArr[1]][i]+'\n');
       }
       await  room.say(replyText);
     }
