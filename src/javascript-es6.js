@@ -31,6 +31,8 @@ const bot = new Wechaty({
   name : 'javascript-es6',
 })
 
+let slots={};
+let works={};
 /**
  *
  * 2. Register event handlers for Bot
@@ -97,8 +99,26 @@ function onError (e) {
 async function onMessage (msg) {
   let room=msg.room();
   if(room && room.id==='@@a22b1066592e356fa7f5c4bd5f3c668261f4191800b120cc6a9cb8d13cf12676'){
-    if(msg.text()==='ping' && msg.to().self()){
-      await  room.say('dong')
+    let msgText = msg.text();
+    if(msg.type()===bot.Message.Type.Text && /^接龙\|.+\|.+$/i.test(msgText)){
+      let msgArr = msgText.split('|');
+      if(msgArr[2]==='开始'){
+        slots[msgArr[1]]=[]
+      }else if(!slots[msgArr[1]].includes(msgArr[2])){
+        slots[msgArr[1]].push(msgArr[2])
+      }
+      const replyText=msgArr[1]+slots[msgArr[1]].join('\n');
+      await  room.say(replyText);
+    }
+    if(msg.type()===bot.Message.Type.Text && /^作业\|\d{4}-\d{2}-\d{2}\|.+$/i.test(msgText)){
+      let msgArr = msgText.split('|');
+      works[msgArr[1]]=msgArr[2];
+      await  room.say('作业已添加或修改')
+    }
+
+    if(msg.type()===bot.Message.Type.Text && /^作业\|\d{4}-\d{2}-\d{2}$/i.test(msgText)){
+      let msgArr = msgText.split('|');
+      await  room.say(msgArr[1]+'的作业是：'+works[msgArr[1]])
     }
   }
   console.log(msg.toString())

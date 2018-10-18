@@ -11,7 +11,7 @@ DOCKER_ENV=$(docker::env $(env | grep WECHATY_) )
 [ -z "$NO_PULL" ] && docker pull "$WECHATY_IMAGE"
 
 docker run \
-  -t -i --rm \
+  -d --rm \
   --name wechaty \
   --volume="$(pwd)":/bot \
   "$WECHATY_IMAGE" \
