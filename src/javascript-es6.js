@@ -100,6 +100,9 @@ async function onMessage (msg) {
   let room=msg.room();
   if(room && room.id==='@@a22b1066592e356fa7f5c4bd5f3c668261f4191800b120cc6a9cb8d13cf12676'){
     let msgText = msg.text();
+    console.log(msg.type()===bot.Message.Type.Text)
+    console.log(/^接龙\|.+\|.+$/i.test(msgText))
+
     if(msg.type()===bot.Message.Type.Text && /^接龙\|.+\|.+$/i.test(msgText)){
       console.log(slots.toString())
       let msgArr = msgText.split('|');
