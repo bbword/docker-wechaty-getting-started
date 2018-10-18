@@ -100,7 +100,10 @@ async function onMessage (msg) {
   let room=msg.room();
   if(room){
     let topic=await room.topic();
-    if(topic===='test'||topic==='我爱二（5）班')
+    if(topic!=='test'||topic!=='我爱二（5）班') {
+      return
+    }
+    console.log(msg.toString())
     let msgText = msg.text();
     if(msg.type()===bot.Message.Type.Text && /^接龙\|.+\|.+$/i.test(msgText)){
       let msgArr = msgText.split('|');
@@ -126,5 +129,5 @@ async function onMessage (msg) {
       await  room.say(msgArr[1]+'的作业是：'+works[msgArr[1]])
     }
   }
-  console.log(msg.toString())
+
 }
