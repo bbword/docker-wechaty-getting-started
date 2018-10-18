@@ -112,6 +112,7 @@ async function onMessage (msg) {
       }else if(msgArr[2]==='删除'){
         delete slots[msgArr[1]]
       }else{
+        if(!slots[msgArr[1]]) return
         let nameArr=msgArr[2].split(':')
         if(nameArr.length!=2) return
         if(nameArr[1]==='删除'){
