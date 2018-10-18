@@ -13,7 +13,6 @@ DOCKER_ENV=$(docker::env $(env | grep WECHATY_) )
 docker run \
   -t -i --rm \
   --name wechaty \
-  --mount type=bind,source="$(pwd)",target=/bot \
-  $DOCKER_ENV \
+  --volume="$(pwd)":/bot \
   "$WECHATY_IMAGE" \
   "$BOT"

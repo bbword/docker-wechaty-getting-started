@@ -64,3 +64,5 @@ typings/
 *.memory-card.json
 .pki/
 t.*
+
+.idea
