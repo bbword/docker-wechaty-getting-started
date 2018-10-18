@@ -111,7 +111,10 @@ async function onMessage (msg) {
       }else if(!slots[msgArr[1]].includes(msgArr[2])){
         slots[msgArr[1]].push(msgArr[2])
       }
-      const replyText=msgArr[1]+slots[msgArr[1]].join('\n');
+      let replyText=msgArr[1]+":\n";
+      for(let i=0;i<slots[msgArr[1]].length;i++){
+        replyText+=((i+1)+slots[msgArr[1]][i]+'\n');
+      }
       await  room.say(replyText);
     }
     if(msg.type()===bot.Message.Type.Text && /^作业\|\d{4}-\d{2}-\d{2}\|.+$/i.test(msgText)){
